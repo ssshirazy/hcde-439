@@ -31,7 +31,7 @@
     </p>
     <h4>Schematic</h4>
     <img src="schematic.jpeg"/>
-    <p>A schematic drawing of my curcuit</p>
+    <p>A schematic drawing of my circuit</p>
     <h4>Calculations</h4> 
     <img src="calculations.jpeg"/>
     <p>Calculations for calculating the resistors needed for the LEDs. For the red, yellow and green,
@@ -40,6 +40,32 @@
       reason, I decided on using the 100 Ohm resistor for the blue led--although the calculated value
       was 85 Ohms.
     </p>
-
+    <h4>My Code</h4>
+    <p>
+      void setup() { // initializes the pins for output, runs once when board is powered/reset
+      pinMode(13, OUTPUT); // initializes pin 13 as an output for a red LED
+      pinMode(12, OUTPUT); // initializes pin 12 as an output for a blue LED
+      pinMode(11, OUTPUT); // initializes pin 11 as an output for a yellow LED
+      pinMode(10, OUTPUT); // initializes pin 10 as an output for a green LED
+  }
+  
+  void loop() { // code repeated until power is no longer supplied or board is reset
+      digitalWrite(13, HIGH); // powers LED connected to pin 13 (red LED), voltage is set to HIGH (5V)
+      delay(250); // program is delayed for 250 milliseconds    
+      digitalWrite(13, LOW); // turns off LED connected to pin 13 (red LED), voltage is set to LOW (0V)
+      delay(250); // program is delayed for 250 milliseconds
+      digitalWrite(12, HIGH); // powers LED connected to pin 12 (blue LED), voltage is set to HIGH (5V)
+      delay(250); // program is delayed for 250 milliseconds
+      digitalWrite(12, LOW); // turns off LED connected to pin 12 (blue LED), voltage is set to LOW (0V)
+      delay(250); // program is delayed for 250 milliseconds
+      digitalWrite(11, HIGH); // powers LED connected to pin 11 (yellow LED), voltage is set to HIGH (5V)
+      delay(250); // program is delayed for 250 milliseconds
+      digitalWrite(11, LOW); // turns off LED connected to pin 11 (yellow LED), voltage is set to LOW (0V)
+      delay(250); // program is delayed for 250 milliseconds
+      digitalWrite(10, HIGH); // powers LED connected to pin 10 (green LED), voltage is set to HIGH (5V)
+      delay(250); // program is delayed for 250 milliseconds
+      digitalWrite(10, LOW); // turns off LED connected to pin 10 (green LED), voltage is set to LOW (0V)
+      delay(250); // program is delayed for 250 milliseconds  
+  }</p>
   </body>
 </html>
