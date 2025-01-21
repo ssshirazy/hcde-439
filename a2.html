@@ -58,10 +58,10 @@
         
             analogWrite(yellowLED, brightness); // set the brightness of yellow LED
             brightness = brightness + fadeAmount; // change the brightness for next time through the loop, brightness increases 
-            if (brightness <= 0 || brightness >= 255) { // reverse the direction of the fading at the ends of the fade
-              fadeAmount = - fadeAmount;
+            if (brightness <= 0 || brightness >= 255) { // reverse the fading direction when reaching the minimum (0) or maximum (255) brightness
+              fadeAmount = - fadeAmount; // reverses the fade (either dim or brighten)
             }
-            delay(30); // delays for 30 milliseconds, to see the dim effect
+            delay(30); // delays for 30 milliseconds, for the fade effect
         
           } else { // if the button is not pressed
             digitalWrite(greenLED, LOW); // turns off LED connected to pin 13 (green LED), voltage is set to LOW (0V)
@@ -70,7 +70,6 @@
             digitalWrite(yellowLED, LOW); // turns off LED connected to pin 7 (yellow LED), voltage is set to LOW (0V)
           }
         }
-        
       </code></pre>    
   </body>
 </html>
