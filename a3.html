@@ -15,6 +15,56 @@
       <p>A GIF that displays my circuit</p>   
     </div>
     <img src="images/A3-off.JPG"/>
-    <p>Photo of my circuit</p>       
+    <p>Photo of my circuit</p>   
+    <h4>My Code</h4>
+    <pre><code>
+        // constant numbers (will not change)
+        const int green = 13; // the number of the green LED pin
+        const int blue = 10; // the number of the blue LED pin
+        const int red = 11; // the number of the red LED pin
+        
+        int sensorMin = 1023; // minimum sensor value
+        int sensorMax = 0; // maximum sensor value
+        
+        int x = A0;   
+        int sensVal = 0;
+        
+        void setup() { // initializes the LED pins for output, runs once when board is powered/reset
+          Serial.begin(9600); // allows the values read by the sensor to be printed in the serial monitor
+          pinMode(green, OUTPUT); // initializes pin 13 as an output for a green LED
+          pinMode(blue, OUTPUT); // initializes pin 10 as an output for a blue LED
+          pinMode(red, OUTPUT); // initializes pin 11 as an output for a red LED
+        
+          while (millis() < 7000) { // calibration will occur during the first 7 seconds
+            sensVal = analogRead(x); // the value read from the photoresistor
+            Serial.println("Calibration period. The value being read is: " + String(sensVal) + "."); // prints the reading to the serial monitor
+        
+            if (sensVal > sensorMax) { // updates if a new maximum value is read
+              sensorMax = sensVal; // sets the max equal to the new value read
+            }
+        
+            if (sensVal < sensorMin) { // updates if a new minimum value is read
+              sensorMin = sensVal; // sets the min equal to the new value read
+            }
+          
+          
+          digitalWrite(green, HIGH); // powers green LED, voltage is set to HIGH (5V). A visual indicator that informs the user when calibration is done
+          delay(500); // delays for half of a second 
+          digitalWrite(green, LOW); // turns off green LED, voltage set to LOW (0V)
+          }
+        }
+        
+        void loop() { // code repeated until power is no longer supplied or board is reset
+          digitalWrite(green, HIGH); // powers green LED, voltage is set to HIGH (5V)
+          digitalWrite(red, HIGH); // powers red LED, voltage is set to HIGH (5V)
+        
+          sensVal = analogRead(x); // the value read from the photoresistor
+          sensVal = constrain(sensVal, sensorMin, sensorMax); // constrains the sensor reading to be between the minimum and maximum values read from calibration
+        
+          sensVal = map(sensVal, sensorMin, sensorMax, 0, 255); // maps the minimum sensor value read from calibration to 0 and the maximum value read to 255
+        
+          analogWrite(blue, sensVal); // set the brightness of blue LED based on the sensor value (sensVal)
+        }        
+    </code></pre>    
   </body>
 </html>
