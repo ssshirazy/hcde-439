@@ -26,8 +26,8 @@
         int sensorMin = 1023; // minimum sensor value
         int sensorMax = 0; // maximum sensor value
         
-        int x = A0;   
-        int sensVal = 0;
+        int x = A0; // pin number assoicated with the photoresistor   
+        int sensVal = 0; // value read by photoresistor
         
         void setup() { // initializes the LED pins for output, runs once when board is powered/reset
           Serial.begin(9600); // allows the values read by the sensor to be printed in the serial monitor
@@ -64,7 +64,7 @@
           sensVal = map(sensVal, sensorMin, sensorMax, 0, 255); // maps the minimum sensor value read from calibration to 0 and the maximum value read to 255
         
           analogWrite(blue, sensVal); // set the brightness of blue LED based on the sensor value (sensVal)
-        }        
+        }                
     </code></pre>    
   </body>
 </html>
