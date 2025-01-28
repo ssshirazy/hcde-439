@@ -24,6 +24,14 @@
     <h4>3: AnalogWrite and analogRead are respectively 8-bit and 10-bit values.
         Imagine you had 10-bit PWM and a 16-bit analog-to-digital converter instead. 
         How would this change your map() code? Explain your answer.</h4>
+    <p>The range for AnalogWrite for a 10-bit PWM is 0-1023 instead of 0-255. For a 16-bit analog-to-digital
+        converter, the output values would range from 0-65,536. As a result, the change this would
+        have on the map() would effect its input values. Similarly to how I mapped the min/max measured in my
+        code, I would imagine that something similar could be done with the new bit values: map(val,
+        0, 65535, 0, 1023). This maps the input values from the analog-to-digital converter to the output range
+        for the 10-bit PWM.
+
+    </p>
     <h4>Calculations</h4>
     <img src="images/a3-calc.jpeg">
     <p>Calculations for calculating the resistors needed for the LEDs and the photoresistor. For the red and green,
