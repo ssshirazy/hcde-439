@@ -36,14 +36,12 @@
         If the measurement is exactly equal to the expected value, no change is made.
         This makes sure that the measurement is adjusted depending on whether it is above or below the expected value.
     </p>
-    <h4>Calculations</h4>
-    <img src="images/a3-calc.jpeg">
-    <p>Calculations for calculating the resistors needed for the LEDs and the photoresistor. For the red and green,
-        I calculated 160 Ohms, in order to use a single resistor, I decided to use the one that was the
-        closest number to this value (and was higher than 160), which was the 220 Ohm resister. For a similar
-        reason, I decided on using the 100 Ohm resistor for the blue led--although the calculated value
-        was 85 Ohms. For the photoresistor, to keep the current within a safe zone of 0.5 mA, the resistance needed to be 
-        10,000 Ohms.</p>
+    <h4>Calculations Justification</h4>
+    <p>I used a 1M Ohm Resistor. This is because the capacitor is measuring human resistance,
+        which can range between 10,000-1,000,000, depending on different factors.
+        I chose 1M Ohm specifically because it falls within the range of resistance the human body typically has, 
+        creating a reference to measure the change in capacitance when someone touches the sensor.
+    </p>
     <h4>Schematic</h4>
     <img src="images/a4-schematic.jpeg"/>
     <p>A schematic drawing of my circuit, including the capacitor and servo motor.</p>
