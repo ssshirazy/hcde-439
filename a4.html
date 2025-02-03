@@ -21,7 +21,10 @@
     <h4>2: Your input device is slightly broken, leading it to give us an erroneous reading 1% of the time.
         How can we address this? Answer in (pseudo)code.</h4>
     <img src="images/a4-q2.jpg"/>
-    <p>To address this erroneous reading, I would first 
+    <p>To address this erroneous reading, I would first start by establishing proper minimum and maximum bounds during calibration. 
+        Then, during the reading phase, I would make sure that the values being measured are within the minimum and maximum that I calibrated.
+        If it falls outside of that (less than the minimum or greater than the maximum), I would print out a message to let the user know that
+        the value read was erroneous.
     </p>
     <h4>3: Your input device is slightly noisy, leading the measurement to randomly deviate from the true measurement up or down by 10%.
         How can we address this? Answer in (pseudo)code.</h4>
