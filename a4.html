@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Samira's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Samira's Assignment 3!</h1>
+    <div class="header">
+      <img src="images/a4-gif.gif" />
+      <p>A GIF that displays my circuit</p>   
+    </div>
+    <img src="images/a4-circuit.jpg"/>
+    <p>Photo of my circuit</p>
+    <h4>1: In your voltage divider, can the variable resistor be either R1 or R2 or does
+        it need to be one or the other? Justify your answer with example calculations.</h4>
+    <img src="images/q1-a3.jpeg"/>
+    <h4>2: Draw a graph where the x-axis is time and the y-axis is voltage.
+        Plot the voltage at V-measure of your voltage divider of your shared gif.</h4>
+    <img src="images/a3-graph.jpeg">
+    <p>When I wasn't flashing my phone at the photoresistor, the value read about 443.
+        When I turned it on, they read 880. The graph is for turing my flash on and off year for a second.
+    </p>
+    <h4>3: AnalogWrite and analogRead are respectively 8-bit and 10-bit values.
+        Imagine you had 10-bit PWM and a 16-bit analog-to-digital converter instead. 
+        How would this change your map() code? Explain your answer.</h4>
+    <p>The range for AnalogWrite for a 10-bit PWM is 0-1023 instead of 0-255. For a 16-bit analog-to-digital
+        converter, the output values would range from 0-65,536. As a result, the change this would
+        have on the map() would effect its input values. Similarly to how I mapped the min/max measured in my
+        code, I would imagine that something similar could be done with the new bit values: map(val,
+        0, 65535, 0, 1023). This maps the input values from the analog-to-digital converter to the output range
+        for the 10-bit PWM.
+    </p>
+    <h4>Calculations</h4>
+    <img src="images/a3-calc.jpeg">
+    <p>Calculations for calculating the resistors needed for the LEDs and the photoresistor. For the red and green,
+        I calculated 160 Ohms, in order to use a single resistor, I decided to use the one that was the
+        closest number to this value (and was higher than 160), which was the 220 Ohm resister. For a similar
+        reason, I decided on using the 100 Ohm resistor for the blue led--although the calculated value
+        was 85 Ohms. For the photoresistor, to keep the current within a safe zone of 0.5 mA, the resistance needed to be 
+        10,000 Ohms.</p>
+    <h4>Schematic</h4>
+    <img src="images/a3-schematic.jpeg"/>
+    <p>A schematic drawing of my circuit, including the LEDs and Photoresistor.</p>
+    <img src="images/a3-sensreading.gif"/>
+    <p>My photoresistor reading values!</p>
+    <img src="images/a3-calibration-gif.gif"/>
+    <p>My photoresistor calibrating and reading values!</p>
+    <h4>My Code</h4>
+    <pre><code>
+        // constant numbers (will not change)
+        const int green = 13; // the number of the green LED pin
+        const int blue = 10; // the number of the blue LED pin
+        const int red = 11; // the number of the red LED pin
+        
+        int sensorMin = 1023; // minimum sensor value
+        int sensorMax = 0; // maximum sensor value
+        
+        int x = A0; // pin number assoicated with the photoresistor   
+        int sensVal = 0; // value read by photoresistor
+        
+        void setup() { // initializes the LED pins for output, runs once when board is powered/reset
+          Serial.begin(9600); // allows the values read by the sensor to be printed in the serial monitor
+          pinMode(green, OUTPUT); // initializes pin 13 as an output for a green LED
+          pinMode(blue, OUTPUT); // initializes pin 10 as an output for a blue LED
+          pinMode(red, OUTPUT); // initializes pin 11 as an output for a red LED
+        
+          while (millis() < 7000) { // calibration will occur during the first 7 seconds
+            sensVal = analogRead(x); // the value read from the photoresistor
+            Serial.println("Calibration period. The value being read is: " + String(sensVal) + "."); // prints the reading to the serial monitor
+        
+            if (sensVal > sensorMax) { // updates if a new maximum value is read
+              sensorMax = sensVal; // sets the max equal to the new value read
+            }
+        
+            if (sensVal < sensorMin) { // updates if a new minimum value is read
+              sensorMin = sensVal; // sets the min equal to the new value read
+            }
+          
+          
+          digitalWrite(green, HIGH); // powers green LED, voltage is set to HIGH (5V). A visual indicator that informs the user when calibration is done
+          delay(500); // delays for half of a second 
+          digitalWrite(green, LOW); // turns off green LED, voltage set to LOW (0V)
+          }
+        }
+        
+        void loop() { // code repeated until power is no longer supplied or board is reset
+          digitalWrite(green, HIGH); // powers green LED, voltage is set to HIGH (5V)
+          digitalWrite(red, HIGH); // powers red LED, voltage is set to HIGH (5V)
+        
+          sensVal = analogRead(x); // the value read from the photoresistor
+          sensVal = constrain(sensVal, sensorMin, sensorMax); // constrains the sensor reading to be between the minimum and maximum values read from calibration
+        
+          sensVal = map(sensVal, sensorMin, sensorMax, 0, 255); // maps the minimum sensor value read from calibration to 0 and the maximum value read to 255
+        
+          analogWrite(blue, sensVal); // set the brightness of blue LED based on the sensor value (sensVal)
+        }                
+    </code></pre>
+    <h4>Acknowledgements</h4>
+    For my code, I used the Arduino calibration example to help me set up my calibration. I referenced lesson slides A1-A5
+    to help with creating my schematics and answering the questions.     
+  </body>
+</html>
