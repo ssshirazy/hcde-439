@@ -20,18 +20,16 @@
     <img src="images/q1-a3.jpeg"/>
     <h4>2: Your input device is slightly broken, leading it to give us an erroneous reading 1% of the time.
         How can we address this? Answer in (pseudo)code.</h4>
-    <img src="images/a3-graph.jpeg">
-    <p>When I wasn't flashing my phone at the photoresistor, the value read about 443.
-        When I turned it on, they read 880. The graph is for turing my flash on and off year for a second.
+    <p>To address this erroneous reading, 
     </p>
     <h4>3: Your input device is slightly noisy, leading the measurement to randomly deviate from the true measurement up or down by 10%.
-        How can we address this? Answer in (pseudo)code.    </h4>
-    <p>The range for AnalogWrite for a 10-bit PWM is 0-1023 instead of 0-255. For a 16-bit analog-to-digital
-        converter, the output values would range from 0-65,536. As a result, the change this would
-        have on the map() would effect its input values. Similarly to how I mapped the min/max measured in my
-        code, I would imagine that something similar could be done with the new bit values: map(val,
-        0, 65535, 0, 1023). This maps the input values from the analog-to-digital converter to the output range
-        for the 10-bit PWM.
+        How can we address this? Answer in (pseudo)code.</h4>
+    <img src="images/a4-q3.jpeg"/>
+    <p> To adjust the measurement based on a 10% deviation, first, I would compare the reading to the expected value.
+        If the measurement is higher than expected, I would reduce it by 10% (multiply by 0.9).
+        If it's lower than expected, I increase it by 10% (multiply by 1.1).
+        If the measurement is exactly equal to the expected value, no change is made.
+        This ensures that the measurement is adjusted depending on whether it is above or below the expected range.
     </p>
     <h4>Calculations</h4>
     <img src="images/a3-calc.jpeg">
