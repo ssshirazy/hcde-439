@@ -16,18 +16,16 @@
     </div>
     <img src="images/a4-circuit.jpg"/>
     <p>Photo of my circuit</p>
-    <h4>1: In your voltage divider, can the variable resistor be either R1 or R2 or does
-        it need to be one or the other? Justify your answer with example calculations.</h4>
+    <h4>Question 1 </h4>
     <img src="images/q1-a3.jpeg"/>
-    <h4>2: Draw a graph where the x-axis is time and the y-axis is voltage.
-        Plot the voltage at V-measure of your voltage divider of your shared gif.</h4>
+    <h4>2: Your input device is slightly broken, leading it to give us an erroneous reading 1% of the time.
+        How can we address this? Answer in (pseudo)code.</h4>
     <img src="images/a3-graph.jpeg">
     <p>When I wasn't flashing my phone at the photoresistor, the value read about 443.
         When I turned it on, they read 880. The graph is for turing my flash on and off year for a second.
     </p>
-    <h4>3: AnalogWrite and analogRead are respectively 8-bit and 10-bit values.
-        Imagine you had 10-bit PWM and a 16-bit analog-to-digital converter instead. 
-        How would this change your map() code? Explain your answer.</h4>
+    <h4>3: Your input device is slightly noisy, leading the measurement to randomly deviate from the true measurement up or down by 10%.
+        How can we address this? Answer in (pseudo)code.    </h4>
     <p>The range for AnalogWrite for a 10-bit PWM is 0-1023 instead of 0-255. For a 16-bit analog-to-digital
         converter, the output values would range from 0-65,536. As a result, the change this would
         have on the map() would effect its input values. Similarly to how I mapped the min/max measured in my
