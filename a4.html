@@ -47,53 +47,46 @@
     <p>A schematic drawing of my circuit, including the capacitor and servo motor.</p>
     <h4>My Code</h4>
     <pre><code>
-        // constant numbers (will not change)
-        const int green = 13; // the number of the green LED pin
-        const int blue = 10; // the number of the blue LED pin
-        const int red = 11; // the number of the red LED pin
-        
-        int sensorMin = 1023; // minimum sensor value
-        int sensorMax = 0; // maximum sensor value
-        
-        int x = A0; // pin number assoicated with the photoresistor   
-        int sensVal = 0; // value read by photoresistor
-        
-        void setup() { // initializes the LED pins for output, runs once when board is powered/reset
-          Serial.begin(9600); // allows the values read by the sensor to be printed in the serial monitor
-          pinMode(green, OUTPUT); // initializes pin 13 as an output for a green LED
-          pinMode(blue, OUTPUT); // initializes pin 10 as an output for a blue LED
-          pinMode(red, OUTPUT); // initializes pin 11 as an output for a red LED
-        
-          while (millis() < 7000) { // calibration will occur during the first 7 seconds
-            sensVal = analogRead(x); // the value read from the photoresistor
-            Serial.println("Calibration period. The value being read is: " + String(sensVal) + "."); // prints the reading to the serial monitor
-        
-            if (sensVal > sensorMax) { // updates if a new maximum value is read
-              sensorMax = sensVal; // sets the max equal to the new value read
+        #include <CapacitiveSensor.h> // library needed to use capacitor
+
+            CapacitiveSensor   cs_4_2 = CapacitiveSensor(4,2); // creates a capacitive sensor using pin 4 and pin 2 as the sesnor pin
+            
+            #include <Servo.h> // library needed to use servo
+            
+            Servo myservo;  // create servo object to control a servo
+            
+            int sensorMin = 1023; // minimum sensor value
+            int sensorMax = 0; // maximum sensor value
+            int sensVal = 0; // measurement read 
+            
+            void setup() {
+              myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+              cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF); // turns off auto-calibration for channel 1 on the capacitive sensor
+              Serial.begin(9600); // starts serial communication
+              while (millis() < 7000) { // calibration will occur during the first 7 seconds
+                long sensVal =  cs_4_2.capacitiveSensor(30);  // value read from the capacitive sensor
+                if (sensVal > sensorMax) { // updates if a new maximum value is read
+                  sensorMax = sensVal; // sets the max equal to the new value read
+                }
+            
+                if (sensVal < sensorMin) { // updates if a new minimum value is read
+                  sensorMin = sensVal; // sets the min equal to the new value read
+                }
+              }
+              Serial.println("Calibration complete"); // prints message to serial monitor
             }
-        
-            if (sensVal < sensorMin) { // updates if a new minimum value is read
-              sensorMin = sensVal; // sets the min equal to the new value read
-            }
-          
-          
-          digitalWrite(green, HIGH); // powers green LED, voltage is set to HIGH (5V). A visual indicator that informs the user when calibration is done
-          delay(500); // delays for half of a second 
-          digitalWrite(green, LOW); // turns off green LED, voltage set to LOW (0V)
-          }
-        }
-        
-        void loop() { // code repeated until power is no longer supplied or board is reset
-          digitalWrite(green, HIGH); // powers green LED, voltage is set to HIGH (5V)
-          digitalWrite(red, HIGH); // powers red LED, voltage is set to HIGH (5V)
-        
-          sensVal = analogRead(x); // the value read from the photoresistor
-          sensVal = constrain(sensVal, sensorMin, sensorMax); // constrains the sensor reading to be between the minimum and maximum values read from calibration
-        
-          sensVal = map(sensVal, sensorMin, sensorMax, 0, 255); // maps the minimum sensor value read from calibration to 0 and the maximum value read to 255
-        
-          analogWrite(blue, sensVal); // set the brightness of blue LED based on the sensor value (sensVal)
-        }                
+            
+            void loop() { // code repeated until power is no longer supplied or board is reset
+                long total1 =  cs_4_2.capacitiveSensor(30);  // value read from the capacitive sensor
+            
+              if (total1 > sensorMax / 2) { // if the value is greater than the recorded max divided by 2
+                total1 = constrain(total1, sensorMin, sensorMax); // constrains the sensor reading to be between the minimum and maximum values read from calibration
+                total1 = map(total1, sensorMin, sensorMax, 0, 180); // maps the minimum sensor value read from calibration to 0 and the maximum value read to 255    
+                myservo.write(total1); // sets the servo position according to the scaled value
+                Serial.println(total1); // prints the total to the serial monitor
+                delay(500); // a delay to allow the servo to get to the position    
+              }
+            }            
     </code></pre>
     <h4>Acknowledgements</h4>
     For my code, I used the Arduino calibration example to help me set up my calibration. I referenced lesson slides A1-A5
