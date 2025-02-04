@@ -46,14 +46,11 @@
     <img src="images/a4-schematic.jpeg"/>
     <p>A schematic drawing of my circuit, including the capacitor and servo motor.</p>
     <h4>My Code</h4>
-    <div class="code-snippet">
-        <code>
-        #include <CapacitiveSensor.h> // library needed to use capacitor
-
-            CapacitiveSensor   cs_4_2 = CapacitiveSensor(4,2); // creates a capacitive sensor using pin 4 and pin 2 as the sesnor pin
-            
-            #include <Servo.h> // library needed to use servo
-            
+    <pre><code>
+            #include &lt;CapacitiveSensor.h&gt; // library needed to use capacitor
+            CapacitiveSensor cs_4_2 = CapacitiveSensor(4,2); // creates a capacitive sensor using pin 4 and pin 2 as the sensor pin
+        
+            #include &lt;Servo.h&gt; // library needed to use servo    
             Servo myservo;  // create servo object to control a servo
             
             int sensorMin = 1023; // minimum sensor value
@@ -88,7 +85,7 @@
                 delay(500); // a delay to allow the servo to get to the position    
               }
             }            
-    </code>
+    </code></pre>
     <h4>Acknowledgements</h4>
     For my code, I used the Arduino calibration example to help me set up my calibration. I referenced lesson slides A6
     to help with creating my schematic.
