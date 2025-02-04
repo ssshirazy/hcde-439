@@ -60,33 +60,33 @@
             int sensorMax = 0; // maximum sensor value
             int sensVal = 0; // measurement read 
             
-            void setup() {
-              myservo.attach(9);  // attaches the servo on pin 9 to the servo object
-              cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF); // turns off auto-calibration for channel 1 on the capacitive sensor
-              Serial.begin(9600); // starts serial communication
-              while (millis() < 7000) { // calibration will occur during the first 7 seconds
-                long sensVal =  cs_4_2.capacitiveSensor(30);  // value read from the capacitive sensor
-                if (sensVal > sensorMax) { // updates if a new maximum value is read
-                  sensorMax = sensVal; // sets the max equal to the new value read
-                }
+            void setup() { // initializes servo and capacitor, runs calibration, runs once when board is powered/reset
+                myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+                cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF); // turns off auto-calibration for channel 1 on the capacitive sensor
+                Serial.begin(9600); // starts serial communication
+                while (millis() < 7000) { // calibration will occur during the first 7 seconds
+                    long sensVal =  cs_4_2.capacitiveSensor(30);  // value read from the capacitive sensor
+                    if (sensVal > sensorMax) { // updates if a new maximum value is read
+                        sensorMax = sensVal; // sets the max equal to the new value read
+                    }
             
-                if (sensVal < sensorMin) { // updates if a new minimum value is read
-                  sensorMin = sensVal; // sets the min equal to the new value read
+                    if (sensVal < sensorMin) { // updates if a new minimum value is read
+                        sensorMin = sensVal; // sets the min equal to the new value read
+                    }
                 }
-              }
-              Serial.println("Calibration complete"); // prints message to serial monitor
+                Serial.println("Calibration complete"); // prints message to serial monitor
             }
             
             void loop() { // code repeated until power is no longer supplied or board is reset
                 long total1 =  cs_4_2.capacitiveSensor(30);  // value read from the capacitive sensor
-            
-              if (total1 > sensorMax / 2) { // if the value is greater than the recorded max divided by 2
                 total1 = constrain(total1, sensorMin, sensorMax); // constrains the sensor reading to be between the minimum and maximum values read from calibration
-                total1 = map(total1, sensorMin, sensorMax, 0, 180); // maps the minimum sensor value read from calibration to 0 and the maximum value read to 255    
-                myservo.write(total1); // sets the servo position according to the scaled value
-                Serial.println(total1); // prints the total to the serial monitor
-                delay(500); // a delay to allow the servo to get to the position    
-              }
+                total1 = map(total1, sensorMin, sensorMax, 0, 180); // maps the minimum sensor value read from calibration to 0 and the maximum value read to 180
+
+                if (total1 > sensorMax / 2) { // if the value is greater than the recorded max divided by 2
+                    myservo.write(total1); // sets the servo position according to the scaled value
+                    Serial.println(total1); // prints the total to the serial monitor
+                    delay(500); // a delay to allow the servo to get to the position    
+                }
             }            
     </code></pre>
     <h4>Acknowledgements</h4>
